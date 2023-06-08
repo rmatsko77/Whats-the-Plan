@@ -9,7 +9,7 @@ function TodoList() {
         {
             title: 'Walk the dog',
             isDone: false,
-            id: 77777
+            id: 77777,
         },
         {
             title: 'Get food',
@@ -46,6 +46,16 @@ function TodoList() {
         setTodos(updatedTodos);
     }
 
+    const setActive = id => {
+        let updatedTodos = todos.map(todo => {
+            if (todo.id === id) {
+                todo.isActive = !todo.isActive
+            }
+            return todo;
+        });
+        setTodos(updatedTodos);
+    }
+
     const unfinishedToDos = todos.filter(todo => !todo.isDone);
     const finishedToDos = todos.filter(todo => todo.isDone);
 
@@ -59,7 +69,6 @@ function TodoList() {
         <div className="todo-list">
             <TodoForm onSubmit={addToDo} />
             <div className="todos unfinished-todos" id={checkEmpty(unfinishedToDos)}>
-                <h2>Test</h2>
                 {unfinishedToDos.map(todo => {
                     const title = todo.title
                     const notes = todo.notes
@@ -67,16 +76,19 @@ function TodoList() {
                     const dueTime = todo.dueTime
                     const isDone = todo.isDone
                     const id = todo.id
+                    const isActive = todo.isActive
                     return (
                         <Todo
                             markDone={markDone}
                             deleteTodo={deleteTodo}
+                            setActive={setActive}
                             id={id}
                             isDone={isDone}
                             title={title}
                             notes={notes}
                             dueDate={dueDate}
                             dueTime={dueTime}
+                            isActive={isActive}
                         />
                     )
                 })}

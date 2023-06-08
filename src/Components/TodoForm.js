@@ -45,7 +45,7 @@ function TodoForm(props) {
 
   return (
     <div className='form-container'>
-      <button className='open-button' onClick={openForm}>Add Todo</button>
+      <button className='open-button' onClick={openForm}>Add to the Plan</button>
       <form className='todo-form' onSubmit={handleSubmit}>
         <button className='close-button' onClick={closeForm}>X</button>
         <label className='text-label' for='form-input'>Title</label>
@@ -69,7 +69,7 @@ function TodoForm(props) {
           </textarea>
         </div>
         <div className='form-due'>
-          <label for='due'>Due</label>
+          <label for='due'>Due:</label>
           <input
             type='date'
             className='due-date'
