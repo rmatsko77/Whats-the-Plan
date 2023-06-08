@@ -1,5 +1,8 @@
 * {
     font-family: Poppins;
+}
+
+body {
     background-color: #eae7dc;
 }
 
@@ -18,26 +21,138 @@ h1 {
 }
 
 .todo-form {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 150%;
+    position: relative;
+    right: 100px;
+    height: 15rem;
+    padding: .5rem;
+    display: none;
+    background-color: #d8c3a581;
 }
 
-.todo-form input {
-    width: 75%;
+.open-button {
+    width: 200px;
+    height: 35px;
+    background-color: #d8c3a5;
+    outline: none;
+    border: none;
+    border-radius: 5pt;
+    cursor: pointer;
+    transition: color .25s, background-color .25s;
+
+}
+
+.open-button:hover {
+    background-color: #e98074;
+    color: white;
+}
+
+.close-button {
+    position: relative;
+    left: 550px;
+    bottom: 26.5px;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    background-color: #e85a4f;
+    color: white;
+    border-bottom-left-radius: 5pt;
+    border: none;
+    outline: none;
+    transition: color .25s;
+}
+
+.close-button:hover {
+   color: black;
+}
+
+.form-title {
+    width: 67%;
     padding-left: 1.5rem;
     height: 39px;
     font-size: 1.1rem;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border: none;
+    border-radius: 10px;
+    border: 1pt solid #8e8d8ae8;
+    margin: .5rem;
+    margin-left: 1.2rem;
+    background-color: #8e8d8a95;
+}
+
+.todo-form .form-due {
+    width: 50%;
+    height: 15%;
+    margin: auto;
+}
+
+.due-date, .due-time {
+    background-color: #8e8d8a;
+    border: 1pt solid #8e8d8ae8;
+    margin: .25rem;
+    padding-left: .25rem;
+    height: 100%;
+    border-radius: 10pt;
+    outline: none;
+    border: none; 
+    cursor: pointer;
+}
+
+input#due {
+    display: inline-block;
+    position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+.notes label {
+    float: left;
+    margin-top: 1rem;
+}
+
+.todo-form .form-notes {
+    width: 75%;
+    margin: .5rem;
+    padding-left: 1.5rem;
+    border-radius: 10px;
+    border: 1pt solid #8e8d8ae8;
+    background-color: #8e8d8a95;
+    resize: none;
+
+}
+
+.todo-form .form-notes:hover {
     background-color: #8e8d8a;
 }
 
-.todo-form input:focus {
+.todo-form .form-notes:focus {
     outline: none;
-    background-color: #8e8d8a;
+}
+
+.todo-form .form-title:focus {
+    outline: none;
     opacity: 90%;
 }
 
@@ -47,9 +162,11 @@ h1 {
     opacity: 90%;
 }
 
-.todo-form button {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+.todo-form .form-button {
+    position: absolute;
+    right: 30px;
+    border-radius: 10px;
+    width: 15%;
     height: 41.3px;
     border: none;
     background-color: #e98074;

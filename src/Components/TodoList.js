@@ -1,25 +1,25 @@
 import { useState } from "react";
-import { IoCheckboxOutline, IoTrashOutline } from 'react-icons/io5'
-import { MdSettingsBackupRestore } from 'react-icons/md'
 import TodoForm from "./TodoForm";
+import Todo from './Todo';
+import FinishedTodo from "./FinishedTodo.js";
 
 function TodoList() {
 
     const [todos, setTodos] = useState([
         {
-            text: 'Walk the dog',
+            title: 'Walk the dog',
             isDone: false,
             id: 77777
         },
         {
-            text: 'Get food',
+            title: 'Get food',
             isDone: true,
             id: 55555
         }
     ]);
 
     const addToDo = todo => {
-        if(!todo.text || /^\s*$/.test(todo.text)) {
+        if (!todo.title || /^\s*$/.test(todo.title)) {
             return
         }
         const newToDos = [
@@ -32,7 +32,7 @@ function TodoList() {
 
     const markDone = id => {
         let updatedTodos = todos.map(todo => {
-            if(todo.id === id) {
+            if (todo.id === id) {
                 todo.isDone = !todo.isDone
             }
             return todo;
@@ -50,38 +50,56 @@ function TodoList() {
     const finishedToDos = todos.filter(todo => todo.isDone);
 
     const checkEmpty = (arr) => {
-        if(!arr.length) {
+        if (!arr.length) {
             return 'empty'
         }
     }
 
     return (
         <div className="todo-list">
-            <TodoForm onSubmit={addToDo}/>
-            <div className="todos unfinished-todos"  id={checkEmpty(unfinishedToDos)}>
-                <h2>Things To Do</h2>
+            <TodoForm onSubmit={addToDo} />
+            <div className="todos unfinished-todos" id={checkEmpty(unfinishedToDos)}>
+                <h2>Test</h2>
                 {unfinishedToDos.map(todo => {
+                    const title = todo.title
+                    const notes = todo.notes
+                    const dueDate = todo.dueDate
+                    const dueTime = todo.dueTime
+                    const isDone = todo.isDone
+                    const id = todo.id
                     return (
-                        <div className="todo unfinished-todo">
-                            <h3>{todo.text}</h3>
-                            <div className="icons">
-                                    <IoCheckboxOutline className="icon" onClick={() => markDone(todo.id)} />
-                                    <IoTrashOutline className="icon" onClick={() => deleteTodo(todo.id)}/>
-                            </div>
-                        </div>
+                        <Todo
+                            markDone={markDone}
+                            deleteTodo={deleteTodo}
+                            id={id}
+                            isDone={isDone}
+                            title={title}
+                            notes={notes}
+                            dueDate={dueDate}
+                            dueTime={dueTime}
+                        />
                     )
                 })}
             </div>
             <div className="todos finished-todos" id={checkEmpty(finishedToDos)}>
                 {finishedToDos.map(todo => {
+                    const title = todo.title
+                    const isDone = todo.isDone
+                    const id = todo.id
+                    const notes = todo.notes
+                    const dueDate = todo.dueDate
+                    const dueTime = todo.dueTime
                     return (
-                        <div className="todo finished-todo">
-                            <h3>{todo.text}</h3>
-                            <div className="icons">
-                                    <MdSettingsBackupRestore className="icon" onClick={() => markDone(todo.id)} />
-                                    <IoTrashOutline className="icon" onClick={() => deleteTodo(todo.id)}/>
-                            </div>
-                        </div>
+                        <FinishedTodo
+                            markDone={markDone}
+                            deleteTodo={deleteTodo}
+                            id={id}
+                            isDone={isDone}
+                            title={title}
+                            notes={notes}
+                            dueDate={dueDate}
+                            dueTime={dueTime}
+                        />
                     )
                 })}
             </div>
