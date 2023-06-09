@@ -5,18 +5,7 @@ import FinishedTodo from "./FinishedTodo.js";
 
 function TodoList() {
 
-    const [todos, setTodos] = useState([
-        {
-            title: 'Walk the dog',
-            isDone: false,
-            id: 77777,
-        },
-        {
-            title: 'Get food',
-            isDone: true,
-            id: 55555
-        }
-    ]);
+    const [todos, setTodos] = useState([]);
 
     const addToDo = todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { IoCheckboxOutline, IoTrashOutline } from 'react-icons/io5'
+import { TbCalendarStats } from "react-icons/tb"
 
 function Todo(props) {
 
@@ -12,7 +13,6 @@ function Todo(props) {
     let dueDay = ''
     let dueDateFormatted = ''
     let dueTimeFormatted = ''
-
 
     if (dueTime) {
         const hour = dueTime.slice(0, 2)
@@ -57,7 +57,7 @@ function Todo(props) {
         else {
             dueDay = dueDate.slice(8)
         }
-        dueDateFormatted = `Due: ${dueMonth} ${dueDay}`
+        dueDateFormatted = `${dueMonth} ${dueDay}`
     }
 
     const toggleActive = () => {
@@ -68,7 +68,7 @@ function Todo(props) {
         props.markDone(id)
         e.stopPropagation()
 
-        if(props.isActive) {
+        if (props.isActive) {
             props.setActive(id)
         }
     }
@@ -79,10 +79,10 @@ function Todo(props) {
     }
 
     const checkActive = () => {
-        if(props.isActive) {
+        if (props.isActive) {
             return 'active'
         }
-        if(!props.isActive) {
+        if (!props.isActive) {
             return 'inactive'
         }
     }
@@ -92,12 +92,12 @@ function Todo(props) {
     return (
         <div className={className} id={id} onClick={toggleActive}>
             <div className='top'>
-                <h3>{props.title}</h3>
-                <p>{dueDateFormatted} {dueTimeFormatted}</p>
                 <div className="icons">
-                    <IoCheckboxOutline className="icon" onClick={markDone}/>
+                    <IoCheckboxOutline id='check-icon' className="icon" onClick={markDone} />
                     <IoTrashOutline className="icon" onClick={deleteTodo} />
                 </div>
+                <p>{dueDate ? <TbCalendarStats className="due-icon" /> : ''}  {dueDateFormatted} {dueTimeFormatted}</p>
+                <h3 id='title'>{props.title}</h3>
             </div>
             <div className='notes'>
                 <p>{notes}</p>

@@ -2,8 +2,28 @@
     font-family: Poppins;
 }
 
+html {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 body {
     background-color: #eae7dc;
+    margin: 0;
+    width: 95%;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -13,19 +33,26 @@ h1 {
 }
 
 .todo-list {
-    margin: 1rem;
+    margin: .5rem;
     padding: .5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    width: 55%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .todo-form {
-    width: 150%;
-    position: relative;
-    right: 100px;
+    width: 500px;
     height: 15rem;
     padding: .75rem;
+    margin-right: 1.5rem;
     display: none;
     margin-bottom: 1rem;
     background-color: #d8c3a581;
@@ -50,7 +77,7 @@ h1 {
 
 .close-button {
     position: relative;
-    left: 566px;
+    left: 482px;
     bottom: 30px;
     width: 30px;
     height: 25px;
@@ -165,9 +192,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .todo-form .form-button {
-    position: absolute;
-    right: 30px;
-    bottom: 20px;
+    position: relative;
+    left: 425px;
+    bottom: 10px;
     border-radius: 10px;
     width: 15%;
     height: 41.3px;
@@ -189,11 +216,18 @@ input[type="time"]::-webkit-calendar-picker-indicator {
  
 .unfinished-todos {
     width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .finished-todos {
-    width: 92%;
+    width: 75%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     top: 70px;
 }
 
@@ -202,11 +236,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .todo {
-    width: 100%;
+    width: 90%;
     height: 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    right: 14px;
     margin: .5rem;
     padding-left: .5rem;
     background-color: #d8c3a5;
@@ -225,6 +261,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .top {
     width: 100%;
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
 }
@@ -249,7 +286,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .active {
-    width: 100%;
+    width: 90%;
     height: 8rem;
     display: flex;
     justify-content: space-between;
@@ -304,4 +341,119 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .todo .icons .icon:hover {
     color: white;
+}
+
+.due-icon {
+    position: relative;
+    top: 2px;
+}
+
+.icons:hover ~ #title {
+    text-decoration: line-through;
+}
+
+@media screen and (max-width: 550px) {
+    .todo-form {
+        width: 360px;
+    }
+
+    .form-title {
+        margin-left: .5rem;
+    }
+
+    .todo-form .form-due {
+        width: 80%;
+        margin-left: 70px;
+    }
+
+    .todo-form .form-due .due-date {
+        margin-left: 5px
+    }
+
+    button.close-button {
+        left: 342px
+    }
+
+    button#form-input.form-button {
+        left: 310px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        margin-right: .5rem;
+    }
+    .todo-form {
+        width: 380px;
+    }
+
+    .todo-form .form-due {
+        width: 80%;
+        margin-left: 70px;
+    }
+
+    .todo-form .form-due .due-date {
+        margin-left: 20px
+    }
+
+    button.close-button {
+        left: 362px
+    }
+
+    button#form-input.form-button {
+        left: 330px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    h1 {
+        margin-right: .5rem;
+    }
+    .todo-form {
+        width: 300px;
+        padding: .5rem;
+    }
+
+    .form-title {
+        margin: 0;
+        padding-left: .3rem;
+        width: 65%;
+        font-size: 1rem;
+    }
+
+    .notes label {
+        margin: 0;
+        padding-left: 1.8rem;
+    }
+
+    textarea {
+        position: relative;
+        margin-left: 4rem;
+        bottom: 7px;
+        left: 20px;      
+    }
+
+    .text-label {
+        padding-right: .5rem;
+        margin-left: 0;
+    }
+
+    .todo-form .form-due {
+        width: 100%;
+        margin-left: 10px;
+    }
+
+    .todo-form .form-due .due-date {
+        margin-left: 7px
+    }
+
+    button.close-button {
+        left: 278px;
+        bottom: 18px;
+    }
+
+    button#form-input.form-button {
+        left: 250px;
+        bottom: 34px;
+    }
 }

@@ -22,7 +22,8 @@ function TodoForm(props) {
       notes: input.notes,
       dueDate: input.dueDate,
       dueTime: input.dueTime,
-      isDone: false
+      isDone: false,
+      isActive: false,
     });
 
     setInput({
