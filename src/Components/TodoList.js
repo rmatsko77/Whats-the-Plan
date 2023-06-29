@@ -1,11 +1,34 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TodoForm from "./TodoForm";
 import Todo from './Todo';
 import FinishedTodo from "./FinishedTodo.js";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Firebase";
+import { useNavigate } from "react-router-dom";
+
 
 function TodoList() {
 
     const [todos, setTodos] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if(!user) {
+                navigate('/')
+            }
+        })
+    }, [])
+
+    const handleSignOut = () => {
+        signOut(auth)
+            .then(() => {
+                navigate('/')
+            })
+            .catch((err) => {
+                alert(err.message);
+            });
+    };
 
     const addToDo = todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {
@@ -56,6 +79,7 @@ function TodoList() {
 
     return (
         <div className="todo-list">
+            <button onClick={handleSignOut}>SignOut</button>
             <TodoForm onSubmit={addToDo} />
             <div className="todos unfinished-todos" id={checkEmpty(unfinishedToDos)}>
                 {unfinishedToDos.map(todo => {
