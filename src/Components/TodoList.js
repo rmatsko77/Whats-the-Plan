@@ -3,15 +3,18 @@ import TodoForm from "./TodoForm";
 import Todo from './Todo';
 import FinishedTodo from "./FinishedTodo.js";
 import { signOut, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../Firebase";
+import { auth, db } from "../Firebase";
 import { useNavigate } from "react-router-dom";
-
+import { collection, addDoc, doc, deleteDoc } from "firebase/firestore"; 
+import { uid } from "uid";
 
 function TodoList() {
 
     const [todos, setTodos] = useState([]);
     const navigate = useNavigate();
+    const uidd = uid()
 
+    
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if(!user) {
@@ -19,6 +22,19 @@ function TodoList() {
             }
         })
     }, [])
+
+    const addToDb = async (toAdd) => {
+        try {
+            const docRef = await addDoc(collection(db, `/${auth.currentUser.email}/${toAdd.id}/${uidd}`), {
+                todos: toAdd,
+                uidd: uidd
+            });
+            console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+          
+    }
 
     const handleSignOut = () => {
         signOut(auth)
@@ -30,7 +46,7 @@ function TodoList() {
             });
     };
 
-    const addToDo = todo => {
+    const addToDo = async todo => {
         if (!todo.title || /^\s*$/.test(todo.title)) {
             return
         }
@@ -38,8 +54,8 @@ function TodoList() {
             ...todos,
             todo
         ]
-
-        setTodos(newToDos)
+        setTodos(newToDos) 
+        addToDb(todo)     
     };
 
     const markDone = id => {
@@ -52,7 +68,7 @@ function TodoList() {
         setTodos(updatedTodos)
     }
 
-    const deleteTodo = id => {
+    const deleteTodo = async id => {
         let updatedTodos = todos.filter(todo => todo.id !== id);
 
         setTodos(updatedTodos);
