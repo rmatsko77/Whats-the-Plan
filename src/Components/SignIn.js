@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase';
 import { useNavigate } from 'react-router-dom'
 
@@ -23,7 +23,7 @@ function SignIn() {
                 navigate('/homepage')
             }
         });
-    }, []);
+    }, [navigate]);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value)

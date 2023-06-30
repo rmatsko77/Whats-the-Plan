@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import TodoForm from "./TodoForm";
 import Todo from './Todo';
 import FinishedTodo from "./FinishedTodo.js";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth, db } from "../Firebase";
 import { useNavigate } from "react-router-dom";
-import { doc, deleteDoc, setDoc, getDocs, collection, query, where, onSnapshot, updateDoc, QuerySnapshot } from "firebase/firestore";
+import { doc, deleteDoc, setDoc, collection, query, onSnapshot, updateDoc } from "firebase/firestore";
 
 function TodoList() {
 
@@ -18,7 +18,7 @@ function TodoList() {
                 navigate('/')
             }
         })
-    },)
+    }, [navigate])
 
     const addToDb = (toAdd) => {
         setDoc(doc(db, `/${auth.currentUser.email}`, `${toAdd.id}`), {
@@ -63,8 +63,6 @@ function TodoList() {
     const markDone = async todo => {
 
         const todoRef = doc(db, `/${auth.currentUser.email}/${todo}`);
-        const opp = todo.isDone
-        console.log(todoRef)
 
         await updateDoc(todoRef, {
             'todo.isDone': true
