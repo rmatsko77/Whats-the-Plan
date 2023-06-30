@@ -5,36 +5,42 @@ import FinishedTodo from "./FinishedTodo.js";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../Firebase";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc, doc, deleteDoc } from "firebase/firestore"; 
-import { uid } from "uid";
+import { doc, deleteDoc, setDoc, getDocs, collection, query, where, onSnapshot, updateDoc, QuerySnapshot } from "firebase/firestore";
 
 function TodoList() {
 
     const [todos, setTodos] = useState([]);
     const navigate = useNavigate();
-    const uidd = uid()
 
-    
     useEffect(() => {
         auth.onAuthStateChanged(user => {
-            if(!user) {
+            if (!user) {
                 navigate('/')
             }
         })
-    }, [])
+    },)
 
-    const addToDb = async (toAdd) => {
-        try {
-            const docRef = await addDoc(collection(db, `/${auth.currentUser.email}/${toAdd.id}/${uidd}`), {
-                todos: toAdd,
-                uidd: uidd
-            });
-            console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
-          
+    const addToDb = (toAdd) => {
+        setDoc(doc(db, `/${auth.currentUser.email}`, `${toAdd.id}`), {
+            todo: toAdd
+        });
     }
+
+    const deleteFromDb = (toDelete) => {
+        deleteDoc(doc(db, `/${auth.currentUser.email}/${toDelete}`,));
+    }
+
+    useEffect(() => {
+        const q = query(collection(db, `/${auth.currentUser.email}`));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            let todosArr = []
+            querySnapshot.forEach((doc) => {
+                todosArr.push({ ...doc.data(), id: doc.id })
+            })
+            setTodos(todosArr)
+        })
+        return () => unsubscribe
+    }, [])
 
     const handleSignOut = () => {
         signOut(auth)
@@ -50,42 +56,49 @@ function TodoList() {
         if (!todo.title || /^\s*$/.test(todo.title)) {
             return
         }
-        const newToDos = [
-            ...todos,
-            todo
-        ]
-        setTodos(newToDos) 
-        addToDb(todo)     
+
+        addToDb(todo)
     };
 
-    const markDone = id => {
-        let updatedTodos = todos.map(todo => {
-            if (todo.id === id) {
-                todo.isDone = !todo.isDone
-            }
-            return todo;
-        });
-        setTodos(updatedTodos)
+    const markDone = async todo => {
+
+        const todoRef = doc(db, `/${auth.currentUser.email}/${todo}`);
+        const opp = todo.isDone
+        console.log(todoRef)
+
+        await updateDoc(todoRef, {
+            'todo.isDone': true
+        })
+
     }
 
-    const deleteTodo = async id => {
-        let updatedTodos = todos.filter(todo => todo.id !== id);
+    const markUndone = async todo => {
 
-        setTodos(updatedTodos);
+        const todoRef = doc(db, `/${auth.currentUser.email}/${todo}`);
+
+        await updateDoc(todoRef, {
+            'todo.isDone': false
+        })
+
+    }
+
+    const deleteTodo = id => {
+        deleteFromDb(id)
+
     }
 
     const setActive = id => {
         let updatedTodos = todos.map(todo => {
-            if (todo.id === id) {
-                todo.isActive = !todo.isActive
+            if (todo.todo.id === id) {
+                todo.todo.isActive = !todo.todo.isActive
             }
             return todo;
         });
         setTodos(updatedTodos);
     }
 
-    const unfinishedToDos = todos.filter(todo => !todo.isDone);
-    const finishedToDos = todos.filter(todo => todo.isDone);
+    const unfinishedToDos = todos.filter(todos => !todos.todo.isDone);
+    const finishedToDos = todos.filter(todos => todos.todo.isDone);
 
     const checkEmpty = (arr) => {
         if (!arr.length) {
@@ -95,17 +108,17 @@ function TodoList() {
 
     return (
         <div className="todo-list">
-            <button onClick={handleSignOut}>SignOut</button>
+            <button className="sign-out" onClick={handleSignOut}>SignOut</button>
             <TodoForm onSubmit={addToDo} />
             <div className="todos unfinished-todos" id={checkEmpty(unfinishedToDos)}>
                 {unfinishedToDos.map(todo => {
-                    const title = todo.title
-                    const notes = todo.notes
-                    const dueDate = todo.dueDate
-                    const dueTime = todo.dueTime
-                    const isDone = todo.isDone
-                    const id = todo.id
-                    const isActive = todo.isActive
+                    const title = todo.todo.title
+                    const notes = todo.todo.notes
+                    const dueDate = todo.todo.dueDate
+                    const dueTime = todo.todo.dueTime
+                    const isDone = todo.todo.isDone
+                    const id = todo.todo.id
+                    const isActive = todo.todo.isActive
                     return (
                         <Todo
                             markDone={markDone}
@@ -124,15 +137,15 @@ function TodoList() {
             </div>
             <div className="todos finished-todos" id={checkEmpty(finishedToDos)}>
                 {finishedToDos.map(todo => {
-                    const title = todo.title
-                    const isDone = todo.isDone
-                    const id = todo.id
-                    const notes = todo.notes
-                    const dueDate = todo.dueDate
-                    const dueTime = todo.dueTime
+                    const title = todo.todo.title
+                    const isDone = todo.todo.isDone
+                    const id = todo.todo.id
+                    const notes = todo.todo.notes
+                    const dueDate = todo.todo.dueDate
+                    const dueTime = todo.todo.dueTime
                     return (
                         <FinishedTodo
-                            markDone={markDone}
+                            markUndone={markUndone}
                             deleteTodo={deleteTodo}
                             id={id}
                             isDone={isDone}
