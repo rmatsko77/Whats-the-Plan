@@ -1,5 +1,7 @@
 README
+
 What's the Plan?
+
 This website, located at https://whats-the-plan.netlify.app/, is a versatile platform designed to help you plan and organize your tasks and events effectively. With What's the Plan?, you can easily create and manage your schedules, set reminders, and stay on top of your commitments. Additionally, you have the option to create an account, enabling you to access and track your tasks across all devices.
 
 Features
