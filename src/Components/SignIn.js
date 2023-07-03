@@ -96,7 +96,7 @@ function SignIn() {
                         <input type='email' value={email} placeholder='Email' onChange={handleEmailChange}></input>
                         <input type='password' value={password} placeholder='Password' onChange={handlePasswordChange}></input>
                         <button onClick={handleSignIn}>Sign-In</button>
-                        <button onClick={() => setIsRegistering(true)}>Create an Account</button>
+                        <button className='create-acc-btn' onClick={() => setIsRegistering(true)}>Create an Account</button>
                     </>
                 )}
             </div>

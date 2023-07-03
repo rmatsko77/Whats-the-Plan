@@ -387,7 +387,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .login-register-container button {
     width: 45%;
-    height: 3.5vh;
+    height: 5vh;
     background-color: #8e8d8a;
     border: 1pt solid black;
     border-radius: 5pt;
@@ -403,8 +403,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     right: 5%;
     border: none;
     border-radius: 10pt;
-    height: 5vh;
-    width: 10%;
+    height: 6vh;
+    width: 12%;
     cursor: pointer;
     font-size: 1rem;
 }
@@ -518,4 +518,24 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         left: 250px;
         bottom: 34px;
     }
+
+    .sign-out {
+        font-size: .5rem;
+    }
+}
+
+@media screen and (min-width: 361px) and (max-width: 621px) {
+    .create-acc-btn {
+        font-size: .75rem;
+    }
+
+    .login-register-container input {
+        font-size: .65rem;
+        padding-left: .3rem;
+    }
+
+    .sign-out {
+        font-size: .75rem;
+    }
+
 }
